@@ -14,31 +14,47 @@ import {
   View
 } from 'react-native';
 
+import ListView from './listview.js';
+import GridView from './gridview.js';
+
 export default class HomeScreen extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {showList: true};
+  }
 
   static navigationOptions = {
     header: null,
   };
 
   handleListView(){
-    const{ navigate } = this.props.navigation;
-    navigate('ListView');
+    this.setState({ showList: true });
   }
 
   goToGridView(){
-    const{ navigate } = this.props.navigation;
-    navigate('GridView');
+    this.setState({ showList: false });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.buttonListView} onPress={this.handleListView.bind(this)}>
-          <Text style={styles.label}>Show ListView</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonGridView} onPress={this.goToGridView.bind(this)}>
-          <Text style={styles.label}>Show GridView</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.buttonListView} onPress={this.handleListView.bind(this)}>
+            <Text style={styles.label}>Show ListView</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonGridView} onPress={this.goToGridView.bind(this)}>
+            <Text style={styles.label}>Show GridView</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.itemContainer}>
+          {
+            this.state.showList ?
+            <ListView/>
+                :
+            <GridView/>
+          }
+        </View>
       </View>
     );
   }
@@ -47,18 +63,30 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'column',
+    backgroundColor: 'white',
+  },
+  buttonContainer: {
+    flex: 0.1,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+  },
+  itemContainer: {
+    flex: 0.9,
     backgroundColor: 'white',
   },
   buttonListView: {
     backgroundColor: 'black',
-    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 0.5,
   },
   buttonGridView: {
-    backgroundColor: 'black',
-    marginTop: 10,
-    padding: 20,
+    backgroundColor: '#01579B',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 0.5,
+    padding: 10,
   },
   label: {
     color: 'white',

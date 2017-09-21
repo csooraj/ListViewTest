@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 0.6,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   loaderContainer: {
     flex: 1,
